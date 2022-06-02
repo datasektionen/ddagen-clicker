@@ -45,7 +45,6 @@ app.post("/login", (req, res) => {
     // Inloggning möjlig även om lösenordet ej är satt, men gör inget.
     if (req.body.password == adminPassword) {
         req.session.loggedIn = true
-        console.log(req.session)
         res.redirect("/");
     } else {
         res.sendFile("views/wrong_password.html", {root:__dirname});
