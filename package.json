@@ -1,0 +1,24 @@
+{
+  "name": "ddagen-clicker",
+  "version": "1.0.0",
+  "description": "Clicker for D-Dagen",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datasektionen/ddagen-clicker.git"
+  },
+  "author": "Datasektionen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/datasektionen/ddagen-clicker/issues"
+  },
+  "homepage": "https://github.com/datasektionen/ddagen-clicker#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3"
+  }
+}

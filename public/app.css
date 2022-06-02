@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    margin-top: 200px;
+}
+
+#main {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    width: 100%;
+}
+
+button {
+    border: 3px solid #363636;
+}
+
+#counter {
+    text-align: center;
+    font-size: 50px;
+}
+
+#increase, #decrease {
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+}
+
+#increase {
+    background: #81d4c0;
+}
+
+#decrease {
+    background: #d48195;
+}
+
+.center {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+
+#login {
+    font-size: 20px;
+    width: 50%;;
+}
