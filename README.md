@@ -5,3 +5,9 @@ För att ändra countern krävs att användaren loggar in. För att sätta ett n
 
 ## Teknik
 NodeJS och biblioteket Express används för backend. Frontend är ren HTML/CSS/JavaScript.
+
+## Installation och start:
+
+1. Installera NodeJS och npm
+2. `npm install`
+3. `node app.js`
