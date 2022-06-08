@@ -27,7 +27,7 @@ var adminPasswordSet = false;
 // Den faktiska countern:
 var counter = 0;
 
-app.get("/", (req,res) => {
+app.get("/", (req, res) => {
     if (!adminPasswordSet)
         res.sendFile("views/create_password.html", {root:__dirname});
     else if (req.session.loggedIn)
@@ -36,7 +36,7 @@ app.get("/", (req,res) => {
         res.sendFile("views/index.html", {root:__dirname});
 });
 
-app.get("/logout",(req,res) => {
+app.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
 });
@@ -44,12 +44,12 @@ app.get("/logout",(req,res) => {
 app.post("/login", (req, res) => {
     // Inloggning möjlig även om lösenordet ej är satt, men gör inget.
     if (req.body.password == adminPassword) {
-        req.session.loggedIn = true
+        req.session.loggedIn = true;
         res.redirect("/");
     } else {
         res.sendFile("views/wrong_password.html", {root:__dirname});
     }
-})
+});
 
 app.post("/set_admin_password", (req, res) => {
     if (!adminPasswordSet) {
@@ -58,8 +58,9 @@ app.post("/set_admin_password", (req, res) => {
     }
 
     res.redirect("/");
-})
+});
 
+// Öka countern om inloggad och skicka nya värdet:
 app.post("/counter_increase", (req, res) => {
     if (req.session.loggedIn) {
         counter++;
@@ -67,21 +68,23 @@ app.post("/counter_increase", (req, res) => {
     } else {
         res.status(401).end();
     }
-})
+});
 
+// Minska countern om inloggad och skicka nya värdet:
 app.post("/counter_decrease", (req, res) => {
     if (req.session.loggedIn) {
-        counter = Math.max(counter - 1, 0);
+        counter = Math.max(counter - 1, 0); // < 0 ej möjligt
         res.send(String(counter));
     } else {
         res.status(401).end();
     }
-})
+});
 
-app.post("/get_counter", (req, res) => {
+// Ge värdet på countern oavsett om inloggad:
+app.post("/get_counter", (_, res) => {
     res.send(String(counter));
-})
+});
 
 app.listen(port, () => {
-    console.log(`D-Dagen Clicker, port: ${port}`)
-})
+    console.log(`D-Dagen Clicker, port: ${port}`);
+});
