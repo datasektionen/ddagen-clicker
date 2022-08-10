@@ -11,3 +11,4 @@ NodeJS och biblioteket Express används för backend. Frontend är ren HTML/CSS/
 1. Installera NodeJS och npm
 2. `npm install`
 3. `node app.js`
+
