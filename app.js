@@ -1,4 +1,4 @@
-const crypto = require("crypto")
+const crypto = require("crypto");
 const https = require("https");
 const fs = require("fs");
 const express = require("express")
@@ -8,7 +8,7 @@ const sessions = require("express-session");
 const clickerController = require("./controllers/clicker");
 const loginController = require("./controllers/login");
 
-const app = express()
+const app = express();
 const oneDay = 1000 * 60 * 60 * 24;
 const sessionSecret = crypto.randomBytes(32).toString("hex");
 

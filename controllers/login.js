@@ -4,7 +4,7 @@ const path = require("path");
 exports.logout = (req, res) => {
     req.session.destroy();
     res.redirect("/");
-}
+};
 
 exports.login = (req, res) => {
     var callbackUrl;
