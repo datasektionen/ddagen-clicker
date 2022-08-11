@@ -38,6 +38,12 @@ button {
     background: #d48195;
 }
 
+#reset {
+    width: 204px;
+    padding: 10px;
+    font-size: 16px;
+}
+
 .center {
     text-align: center;
 }

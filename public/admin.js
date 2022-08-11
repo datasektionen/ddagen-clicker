@@ -1,5 +1,6 @@
 const increaseButton = document.getElementById("increase");
 const decreaseButton = document.getElementById("decrease");
+const resetButton = document.getElementById("reset");
 const counterText = document.getElementById("counter");
 
 increaseButton.onclick = function() {
@@ -8,6 +9,10 @@ increaseButton.onclick = function() {
 
 decreaseButton.onclick = function() {
     performRequest("/counter_decrease", displayNewCounterValue);
+};
+
+resetButton.onclick = function() {
+    performRequest("/counter_reset", displayNewCounterValue);
 };
 
 setInterval(function() {

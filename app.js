@@ -1,12 +1,20 @@
 const crypto = require("crypto")
+const https = require("https");
+const fs = require("fs");
 const express = require("express")
 const cookieParser = require("cookie-parser");
 const sessions = require("express-session");
-const app = express()
-const port = 3000
-const oneDay = 1000 * 60 * 60 * 24;
 
-const sessionSecret = crypto.randomBytes(128).toString("hex");
+const clickerController = require("./controllers/clicker");
+const loginController = require("./controllers/login");
+
+const app = express()
+const oneDay = 1000 * 60 * 60 * 24;
+const sessionSecret = crypto.randomBytes(32).toString("hex");
+
+// Default values for environment variables. Documented in the README.
+process.env.PORT     = typeof process.env.PORT     === "undefined" ? 3000          : process.env.PORT;
+process.env.NODE_ENV = typeof process.env.NODE_ENV === "undefined" ? "development" : process.env.NODE_ENV;
 
 app.use(sessions({
     secret: sessionSecret,
@@ -20,71 +28,42 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// Lösenordet kommer bara ställas in en gång för alla användare:
-var adminPassword = "";
-var adminPasswordSet = false;
+// ---------------------------- //
+//            Routes:           //
+// ---------------------------- //
 
-// Den faktiska countern:
-var counter = 0;
+app.get("/", clickerController.index);
 
-app.get("/", (req, res) => {
-    if (!adminPasswordSet)
-        res.sendFile("views/create_password.html", {root:__dirname});
-    else if (req.session.loggedIn)
-        res.sendFile("views/admin.html", {root:__dirname});
-    else
-        res.sendFile("views/index.html", {root:__dirname});
-});
+app.get("/logout", loginController.logout);
 
-app.get("/logout", (req, res) => {
-    req.session.destroy();
-    res.redirect("/");
-});
+app.get("/login", loginController.login);
 
-app.post("/login", (req, res) => {
-    // Inloggning möjlig även om lösenordet ej är satt, men gör inget.
-    if (req.body.password == adminPassword) {
-        req.session.loggedIn = true;
-        res.redirect("/");
-    } else {
-        res.sendFile("views/wrong_password.html", {root:__dirname});
-    }
-});
+app.get("/login/:token", loginController.loginWithToken);
 
-app.post("/set_admin_password", (req, res) => {
-    if (!adminPasswordSet) {
-        adminPassword = req.body.password;
-        adminPasswordSet = true;
-    }
+app.post("/counter_increase", clickerController.counterIncrease);
 
-    res.redirect("/");
-});
+app.post("/counter_decrease", clickerController.counterDecrease);
 
-// Öka countern om inloggad och skicka nya värdet:
-app.post("/counter_increase", (req, res) => {
-    if (req.session.loggedIn) {
-        counter++;
-        res.send(String(counter));
-    } else {
-        res.status(401).end();
-    }
-});
+app.post("/counter_reset", clickerController.counterReset);
 
-// Minska countern om inloggad och skicka nya värdet:
-app.post("/counter_decrease", (req, res) => {
-    if (req.session.loggedIn) {
-        counter = Math.max(counter - 1, 0); // < 0 ej möjligt
-        res.send(String(counter));
-    } else {
-        res.status(401).end();
-    }
-});
+app.post("/get_counter", clickerController.getCounter);
 
-// Ge värdet på countern oavsett om inloggad:
-app.post("/get_counter", (_, res) => {
-    res.send(String(counter));
-});
+// ---------------------------- //
+//      Start the server:       //
+// ---------------------------- //
 
-app.listen(port, () => {
-    console.log(`D-Dagen Clicker, port: ${port}`);
+var server;
+
+if (process.env.NODE_ENV === "production") {
+    server = app;
+} else {
+    // If we are in development mode, we want to use self signed certificates for https to work:
+    server = https.createServer({
+        key: fs.readFileSync("key.pem"),
+        cert: fs.readFileSync("cert.pem")
+    }, app);
+}
+
+server.listen(process.env.PORT, () => {
+    console.log(`D-Dagen clicker, port: ${process.env.PORT}`);
 });

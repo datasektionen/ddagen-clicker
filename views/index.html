@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>D-Dagen - Clicker</title>
-        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="/app.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -10,13 +10,8 @@
             <h2 id="counter"></h2>
             <br>
 
-            <form action="/login" method="post">
-                <h2 class="center">Autentisera</h2>
-                <div class="input-field">
-                    <input type="password" name="password" id="password" placeholder="Ange lösenord">
-                </div>
-                <br>
-                <input id="login" type="submit" value="⏎">
+            <form action="/login" method="get">
+                <input id="login" type="submit" value="Logga in">
             </form>
         </div>
 
