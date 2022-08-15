@@ -4,6 +4,7 @@ const path = require("path");
 var counter = 0;
 
 exports.index = (req, res) => {
+    // Make sure the page reloads each time so that login/logout works:
     res.header("Cache-Control", "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0");
 
     if (req.session.loggedIn)

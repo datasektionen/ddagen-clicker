@@ -3,7 +3,7 @@ const path = require("path");
 
 exports.logout = (req, res) => {
     req.session.destroy();
-    forceRedirectIndex(res);
+    res.redirect("/");
 };
 
 exports.login = (req, res) => {
@@ -47,7 +47,7 @@ function checkUserPermission(req, res, uid) {
     axios.get(url).then(axiosRes => {     
         if (axiosRes.data.includes("admin")) {
             req.session.loggedIn = true;
-            forceRedirectIndex(res);
+            res.redirect("/");
         } else {
             res.sendFile("views/no_permission.html", {root: path.join(__dirname, "..")});
         }
@@ -55,9 +55,4 @@ function checkUserPermission(req, res, uid) {
         console.error(error);
         res.status(500).end();
     });
-}
-
-function forceRedirectIndex(res) {
-    //res.header("Cache-Control", "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0");
-    res.redirect("/");
 }
