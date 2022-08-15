@@ -20,3 +20,7 @@ Relevanta miljövariabler:
 * `LOGIN_VERIFICATION_TOKEN` (Obligatorisk): Api-nyckel som används för att verifiera login-tokens. Be informationsorganet om en.
 * `PORT`: Serverport. (Valfri, standard är 3000)
 * `NODE_ENV`: `development`/`production`. (Valfri, standard är development).
+
+## Deploy
+
+För att få upp din ändring på clicker.ddagen.se, ladda upp koden på github-repot, gå sedan till `Actions` i menyn längst upp, välj `Deploy` till vänster, och tryck på `Run workflow` till höger. Det tar cirka 2 minuter för ändringen att slå igenom.
