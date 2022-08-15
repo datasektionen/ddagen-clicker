@@ -4,6 +4,8 @@ const path = require("path");
 var counter = 0;
 
 exports.index = (req, res) => {
+    res.header("Cache-Control", "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0");
+
     if (req.session.loggedIn)
         res.sendFile("views/admin.html", {root: path.join(__dirname, "..")});
     else
